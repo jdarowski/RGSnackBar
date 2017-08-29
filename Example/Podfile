@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'RGSnackBar_Example' do
+  pod 'RGSnackBar', :path => '../'
+
+  target 'RGSnackBar_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
