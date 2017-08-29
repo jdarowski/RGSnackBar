@@ -1,0 +1,16 @@
+PODS:
+  - RGSnackBar (0.1.0)
+
+DEPENDENCIES:
+  - RGSnackBar (from `../`)
+
+EXTERNAL SOURCES:
+  RGSnackBar:
+    :path: ../
+
+SPEC CHECKSUMS:
+  RGSnackBar: c2cb6dbafeeabc89a7019391297a833fd72d6994
+
+PODFILE CHECKSUM: eed89d945d9ef4bc8b2d31ffdcb250cf29d9d0bd
+
+COCOAPODS: 1.3.1
