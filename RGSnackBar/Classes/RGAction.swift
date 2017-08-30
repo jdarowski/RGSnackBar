@@ -8,16 +8,7 @@
 
 import UIKit
 
-enum RGActionPriority: Int {
-    case verbose    = -200
-    case info       = -100
-    case `default`  = 0
-    case warning    = 100
-    case error      = 1000
-    case critical   = 1000000
-}
-
-class RGAction: NSObject {
+public class RGAction: NSObject {
 
     typealias RGActionBlock = ((RGAction) -> Void)
     var title: String

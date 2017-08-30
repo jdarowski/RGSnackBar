@@ -1,25 +1,96 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="RGSnackBar_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RGSnackBar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rm3-SP-cTr">
+                                <rect key="frame" x="112" y="20" width="96" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="JFJ-UI-ZIQ">
+                                <rect key="frame" x="16" y="61" width="288" height="29"/>
+                                <segments>
+                                    <segment title="Short"/>
+                                    <segment title="Long"/>
+                                    <segment title="Extra long"/>
+                                </segments>
+                            </segmentedControl>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type your message here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qab-Em-flS">
+                                <rect key="frame" x="16" y="153" width="288" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="OTW-DE-xNx"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3lg-UP-ObO">
+                                <rect key="frame" x="97" y="203" width="126" height="30"/>
+                                <state key="normal" title="Enqueue message"/>
+                                <connections>
+                                    <action selector="enqueueButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="8Kk-3J-r1b"/>
+                                </connections>
+                            </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="H40-Ha-Iva">
+                                <rect key="frame" x="16" y="105" width="288" height="29"/>
+                                <segments>
+                                    <segment title="Verb"/>
+                                    <segment title="Info"/>
+                                    <segment title="Def"/>
+                                    <segment title="Warn"/>
+                                    <segment title="Err"/>
+                                    <segment title="Crit"/>
+                                </segments>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Rm3-SP-cTr" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="0dW-3e-eIo"/>
+                            <constraint firstItem="qab-Em-flS" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="Dv7-3F-CNG"/>
+                            <constraint firstItem="3lg-UP-ObO" firstAttribute="top" secondItem="qab-Em-flS" secondAttribute="bottom" constant="20" id="F12-Zo-X4R"/>
+                            <constraint firstItem="3lg-UP-ObO" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="GpJ-ZZ-Wfh"/>
+                            <constraint firstItem="qab-Em-flS" firstAttribute="top" secondItem="H40-Ha-Iva" secondAttribute="bottom" constant="20" id="LUK-40-9kz"/>
+                            <constraint firstItem="qab-Em-flS" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="Mj5-WO-lKT"/>
+                            <constraint firstItem="JFJ-UI-ZIQ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="NRc-7c-9WL"/>
+                            <constraint firstItem="Rm3-SP-cTr" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="Rjg-ZW-HUV"/>
+                            <constraint firstItem="JFJ-UI-ZIQ" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="X84-GR-wJ1"/>
+                            <constraint firstItem="H40-Ha-Iva" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="l1e-Wj-rgA"/>
+                            <constraint firstItem="H40-Ha-Iva" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="mNe-EO-fVC"/>
+                            <constraint firstItem="JFJ-UI-ZIQ" firstAttribute="top" secondItem="Rm3-SP-cTr" secondAttribute="bottom" constant="20" id="nXj-s0-Vad"/>
+                            <constraint firstItem="H40-Ha-Iva" firstAttribute="top" secondItem="JFJ-UI-ZIQ" secondAttribute="bottom" constant="16" id="pXv-0g-3uK"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="enqueueButton" destination="3lg-UP-ObO" id="cKW-UO-31P"/>
+                        <outlet property="lengthControl" destination="JFJ-UI-ZIQ" id="RVa-jj-Aa1"/>
+                        <outlet property="messageTextField" destination="qab-Em-flS" id="eUF-mp-sJh"/>
+                        <outlet property="prorityControl" destination="H40-Ha-Iva" id="tqW-VJ-eX0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="33.75" y="34.859154929577464"/>
         </scene>
     </scenes>
 </document>
