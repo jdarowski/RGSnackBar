@@ -15,8 +15,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var prorityControl: UISegmentedControl!
     @IBOutlet weak var messageTextField: UITextField!
     @IBOutlet weak var enqueueButton: UIButton!
-    
-    var messagePresenter = RGMessageConsolePresenter()
+
+    var messageQueue = RGMessageQueue(presenter: RGMessageConsolePresenter())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +56,7 @@ class ViewController: UIViewController {
         let message = messageTextField.text ?? "Empty message wtf"
         
         if let rgmessage = RGMessage(text: message, priority: priority, duration: duration) {
-            messagePresenter.enqueue(rgmessage)
+            messageQueue.push(rgmessage)
         }
     }
 }

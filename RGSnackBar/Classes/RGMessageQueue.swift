@@ -9,89 +9,57 @@
 import UIKit
 import SwiftPriorityQueue
 
-/**
- *  A delegate protocol for the message queue
- */
-public protocol RGMessageQueueDelegate : class {
-    func animationDuration(message: RGMessage, from queue: RGMessageQueue) -> NSTimeInterval
-    func show(message: RGMessage, from queue: RGMessageQueue) -> Bool
-    func dismissMessage(from queue: RGMessageQueue) -> Bool
-}
-
 public class RGMessageQueue: NSObject {
     private var _messages = PriorityQueue<RGMessage>()
-    private var _showingTimer: NSTimer?
-    private var _hidingTimer: NSTimer?
     private var _messageBeingShown: RGMessage?
-    private var _waitingQueue: dispatch_queue_t = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
-    weak var delegate: RGMessageQueueDelegate?
-    
-    func push(message: RGMessage) {
-        _messages.push(message)
-        
-        guard _messageBeingShown == nil else {
-            // Already showing a message. Nothing to do here.
-            return
-        }
-        showNextMessage()
+    private var _operationQueue = NSOperationQueue()
+
+    public var presenter: RGMessagePresenter
+
+    private static var instanceCounter: UInt = 0
+
+    public init(presenter: RGMessagePresenter) {
+        self.presenter = presenter
+        _operationQueue.qualityOfService = .Background
+        _operationQueue.name = "com.wearerealitygames.rgsnackbar.messagequeue.\(RGMessageQueue.instanceCounter)"
+        _operationQueue.maxConcurrentOperationCount = 1
+        super.init()
+        self.presenter.delegate = self
+        RGMessageQueue.instanceCounter += 1
     }
     
-    func showNextMessage() {
-        if let message = _messages.pop() {
-            show(message)
-        }
-    }
-    
-    func show(message: RGMessage) {
-        if let del = delegate {
-            let totalTime = del.animationDuration(message, from: self) + message.duration
-            if del.show(message, from: self) {
-                _messageBeingShown = message
-                _showingTimer?.invalidate()
-                _showingTimer = NSTimer.scheduledTimerWithTimeInterval(totalTime, target: self, selector: #selector(messageShowingTimeUp(_:)), userInfo: nil, repeats: false)
-            } else {
-                print("ERROR: message showing failed")
+    public func push(message: RGMessage) {
+        _operationQueue.addOperationWithBlock({
+            self._messages.push(message)
+
+            guard self._messageBeingShown == nil else {
+                // Already showing a message. Nothing to do here.
+                return
             }
-        } else {
-            print("No delegate")
+            self.showNextMessage()
+        })
+    }
+
+    func showNextMessage() {
+        guard let queue = NSOperationQueue.currentQueue() where queue == _operationQueue else {
+            _operationQueue.addOperationWithBlock({ self.showNextMessage() })
+            return
+        }
+        if let message = _messages.pop() {
+            _messageBeingShown = message
+            dispatch_async(dispatch_get_main_queue(), { 
+                self.presenter.present(message)
+            })
         }
     }
-    
-    func hideMessage() {
-        guard let del = delegate else {
-            print("No delegate")
-            return
-        }
-        guard let message = _messageBeingShown else {
-            print ("No message")
-            return
-        }
-        guard del.dismissMessage(from: self) else {
-            print("Couldn't dismiss message")
-            return
-        }
+}
+
+extension RGMessageQueue: RGMessagePresenterDelegate {
+    public func presenter(_: RGMessagePresenter, didPresent message: RGMessage) {
+        _messageBeingShown = message
     }
-    
-    func messageShowingTimeUp(timer: NSTimer) {
-        guard let del = delegate else {
-            print("No delegate")
-            return
-        }
-        guard let message = _messageBeingShown else {
-            print ("No message")
-            return
-        }
-        let time = del.animationDuration(message, from: self)
-        hideMessage()
-        if time > 0.0 {
-            _hidingTimer?.invalidate()
-            _hidingTimer = NSTimer(timeInterval: time, target: self, selector: #selector(messageHidingTimeUp(_:)), userInfo: nil, repeats: false)
-        } else {
-            messageHidingTimeUp(nil)
-        }
-    }
-    
-    func messageHidingTimeUp(timer: NSTimer?) {
+
+    public func presenter(_: RGMessagePresenter, didDismiss message: RGMessage) {
         _messageBeingShown = nil
         showNextMessage()
     }

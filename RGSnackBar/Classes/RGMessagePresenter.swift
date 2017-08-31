@@ -8,38 +8,49 @@
 
 import UIKit
 
-public protocol RGMessagePresenter: RGMessageQueueDelegate {
-    var messageQueue: RGMessageQueue { get }
-    
-    func enqueue(message: RGMessage)
+public protocol RGMessagePresenter {
+    weak var delegate: RGMessagePresenterDelegate? { get set }
+    func present(message: RGMessage)
+}
+
+public protocol RGMessagePresenterDelegate: class {
+    func presenter(_: RGMessagePresenter, didPresent message: RGMessage)
+    func presenter(_: RGMessagePresenter, didDismiss message: RGMessage)
 }
 
 public class RGMessageConsolePresenter: RGMessagePresenter {
-    private var _messageQueue: RGMessageQueue
-    public var messageQueue: RGMessageQueue { return _messageQueue }
-    
-    public init(queue: RGMessageQueue=RGMessageQueue()) {
-        _messageQueue = queue
-        _messageQueue.delegate = self
+    private var _timer: NSTimer?
+    private var _message: RGMessage?
+
+    weak public var delegate: RGMessagePresenterDelegate?
+
+    public init() {
+        
+    }
+
+    public func present(message: RGMessage) {
+        show(message)
     }
     
-    public func enqueue(message: RGMessage) {
-        messageQueue.push(message)
-    }
-    
-    public func animationDuration(message: RGMessage, from queue: RGMessageQueue) -> NSTimeInterval {
-        return 0.0
-    }
-    
-    public func show(message: RGMessage, from queue: RGMessageQueue) -> Bool {
+    private func show(message: RGMessage) {
+        _message = message
         print("---- \(NSDate().timeIntervalSince1970) - BEGIN RGMESSAGE ----")
         print(message.priority.stringValue + ": " + message.text)
-        return true
+        delegate?.presenter(self, didPresent: message)
+
+        _timer?.invalidate()
+        _timer = NSTimer.scheduledTimerWithTimeInterval(message.duration, target: self, selector: #selector(dismissTimerUp(_:)), userInfo: nil, repeats: false)
     }
-    
-    public func dismissMessage(from queue: RGMessageQueue) -> Bool {
+
+
+    @objc public func dismissTimerUp(timer: NSTimer?){
         print("---- \(NSDate().timeIntervalSince1970) -  END RGMESSAGE  ----")
-        return true
+        guard let message = _message else {
+            return
+        }
+
+        delegate?.presenter(self, didDismiss: message)
+        _message = nil
     }
 }
 
