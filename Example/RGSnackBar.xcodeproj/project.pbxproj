@@ -339,11 +339,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-RGSnackBar_Example/Pods-RGSnackBar_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/RGSnackBar/RGSnackBar.framework",
+				"${BUILT_PRODUCTS_DIR}/SteviaLayout/SteviaLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftPriorityQueue/SwiftPriorityQueue.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RGSnackBar.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SteviaLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftPriorityQueue.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

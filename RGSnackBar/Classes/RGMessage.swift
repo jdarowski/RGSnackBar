@@ -51,6 +51,12 @@ public class RGMessage: NSObject, Comparable {
     private var _customDuration: NSTimeInterval
     private var _actions = [RGAction]()
 
+    public var actions: [RGAction] {
+        get {
+            return _actions
+        }
+    }
+
     public init?(text: String,
          image: UIImage?=nil,
          actions: [RGAction]?=nil,

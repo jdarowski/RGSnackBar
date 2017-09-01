@@ -8,13 +8,14 @@
 
 import UIKit
 
+public typealias RGActionBlock = ((RGAction) -> Void)
 public class RGAction: NSObject {
 
-    typealias RGActionBlock = ((RGAction) -> Void)
-    var title: String
-    var action: RGActionBlock?
 
-    init(title: String, action: RGActionBlock?) {
+    public var title: String
+    public var action: RGActionBlock?
+
+    public init(title: String, action: RGActionBlock?) {
         self.title = title
         self.action = action
         super.init()

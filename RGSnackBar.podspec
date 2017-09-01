@@ -40,5 +40,6 @@ TODO: Add long description of the pod here.
   s.frameworks = 'UIKit'
   # s.dependency 'AFNetworking', '~> 2.3'
   s.dependency 'SwiftPriorityQueue', '~> 1.0.0'
+  s.dependency 'SteviaLayout', '~> 2.0'
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '2.3' }
 end

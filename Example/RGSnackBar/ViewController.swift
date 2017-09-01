@@ -16,11 +16,24 @@ class ViewController: UIViewController {
     @IBOutlet weak var messageTextField: UITextField!
     @IBOutlet weak var enqueueButton: UIButton!
 
-    var messageQueue = RGMessageQueue(presenter: RGMessageConsolePresenter())
+    var messageQueue: RGMessageQueue!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if let window = UIApplication.sharedApplication().keyWindow {
+            messageQueue = RGMessageQueue(presenter: RGMessageSnackBarPresenter(view: window))
+        } else {
+            messageQueue = RGMessageQueue(presenter: RGMessageSnackBarPresenter(view: view))
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,6 +48,8 @@ class ViewController: UIViewController {
             duration = .long
         case 2:
             duration = .extraLong
+        case 3:
+            duration = .eternal
         default:
             duration = .short
         }
@@ -55,7 +70,11 @@ class ViewController: UIViewController {
         }
         let message = messageTextField.text ?? "Empty message wtf"
         
-        if let rgmessage = RGMessage(text: message, priority: priority, duration: duration) {
+        let actions = [RGAction(title: "Try again", action: { print($0.title) })
+            , RGAction(title: "hax", action: { print($0.title)})
+        ]
+
+        if let rgmessage = RGMessage(text: message, image: UIImage(named: "warning"), priority: priority, actions: actions, duration: duration) {
             messageQueue.push(rgmessage)
         }
     }
