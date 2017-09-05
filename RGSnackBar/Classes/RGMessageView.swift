@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RGMessageView: UIView {
+public class RGMessageView: UIView {
     public var message: RGMessage? {
         didSet {
             prepareForReuse()
@@ -18,12 +18,12 @@ class RGMessageView: UIView {
         }
     }
 
-    init(frame: CGRect=CGRectZero, message msg: RGMessage?) {
+    public init(frame: CGRect=CGRectZero, message msg: RGMessage?) {
         message = msg
         super.init(frame: frame)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 

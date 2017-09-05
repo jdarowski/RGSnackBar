@@ -9,7 +9,7 @@
 import UIKit
 import SteviaLayout
 
-class RGMessageSnackBarView: RGMessageView {
+public class RGMessageSnackBarView: RGMessageView {
 
     private var imageView = UIImageView()
     private var messageLabel = UILabel()
@@ -18,7 +18,7 @@ class RGMessageSnackBarView: RGMessageView {
     var parentView: UIView
     var presenter: RGMessagePresenter?
 
-    init(message: RGMessage?, containerView: UIView) {
+    public init(message: RGMessage?, containerView: UIView) {
         parentView = containerView
         super.init(frame: containerView.frame, message: message)
 
@@ -32,12 +32,12 @@ class RGMessageSnackBarView: RGMessageView {
         layoutIfNeeded()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         parentView = UIView()
         super.init(coder: aDecoder)
     }
 
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         super.awakeFromNib()
         self.layoutMainView()
     }
@@ -72,7 +72,7 @@ class RGMessageSnackBarView: RGMessageView {
         actionStack.top(8.0).bottom(8.0)
         actionStack.alignment = .Center
         actionStack.axis = .Horizontal
-        actionStack.distribution = .EqualCentering
+        actionStack.distribution = .EqualSpacing
         actionStack.spacing = 10.0
         actionStack.setContentCompressionResistancePriority(900, forAxis: .Horizontal)
 
@@ -83,7 +83,7 @@ class RGMessageSnackBarView: RGMessageView {
         layer.cornerRadius = 8.0
     }
 
-    override func layoutMessage(message: RGMessage) {
+    override public func layoutMessage(message: RGMessage) {
         messageLabel.text = message.text
         imageView.image = message.image
         let imageDimension: CGFloat = imageView.image == nil ? 0.0 : 25.0
@@ -104,7 +104,7 @@ class RGMessageSnackBarView: RGMessageView {
         layoutIfNeeded()
     }
 
-    override func prepareForReuse() {
+    override public func prepareForReuse() {
         messageLabel.text = nil
         imageView.image = nil
         for view in actionStack.arrangedSubviews {

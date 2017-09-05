@@ -29,10 +29,11 @@ class ViewController: UIViewController {
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+
         if let window = UIApplication.sharedApplication().keyWindow {
-            messageQueue = RGMessageQueue(presenter: RGMessageSnackBarPresenter(view: window))
+            messageQueue = RGMessageQueue(presenter: RGMessageSnackBarPresenter(view: view, animation: RGMessageSnackBarAnimation.slideUp))
         } else {
-            messageQueue = RGMessageQueue(presenter: RGMessageSnackBarPresenter(view: view))
+//            messageQueue = RGMessageQueue(presenter: RGMessageSnackBarPresenter(view: view))
         }
     }
 
