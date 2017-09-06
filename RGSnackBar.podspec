@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'RGSnackBar'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of RGSnackBar.'
+  s.summary          = 'A small, yet robust and extensible snackbar for iOS'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,27 +18,23 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+RGSnackBar is a small library that allows you to queue certain messages and later display them in a view you like.
+
+It comes with default ways to display messages and a lot of possibilities.
+
+More will come.
                        DESC
 
   s.homepage         = 'https://github.com/jdarowski/RGSnackBar'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'jdarowski' => 'kuvisit@gmail.com' }
+  s.license          = { :type => 'MIT  ', :file => 'LICENSE' }
+  s.author           = { 'kuvisit' => 'kuvisit@gmail.com' }
   s.source           = { :git => 'https://github.com/jdarowski/RGSnackBar.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '9.0'
 
   s.source_files = 'RGSnackBar/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'RGSnackBar' => ['RGSnackBar/Assets/*.png']
-  # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
   s.dependency 'SwiftPriorityQueue', '~> 1.0.0'
   s.dependency 'SteviaLayout', '~> 2.0'
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '2.3' }

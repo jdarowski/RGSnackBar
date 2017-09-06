@@ -1,6 +1,6 @@
 //
 //  RGMessageView.swift
-//  Pods
+//  RGSnackBar
 //
 //  Created by Jakub Darowski on 31/08/2017.
 //
@@ -8,7 +8,15 @@
 
 import UIKit
 
+/**
+ * A generic message view. Should **not** be instantiated, but extended.
+ *
+ * Provides the basic variables and methods as well as some handy utility
+ * methods. Base for all potential message-displaying views.
+ */
 public class RGMessageView: UIView {
+
+    /// The message to be displayed in the view
     public var message: RGMessage? {
         didSet {
             prepareForReuse()
@@ -18,7 +26,13 @@ public class RGMessageView: UIView {
         }
     }
 
-    public init(frame: CGRect=CGRectZero, message msg: RGMessage?) {
+    /**
+     * The main constructor.
+     *
+     * - Parameter frame: the desired frame of the message view
+     * - Parameter message: themessage to be displayed or nil
+     */
+    public init(frame: CGRect = .zero, message msg: RGMessage?) {
         message = msg
         super.init(frame: frame)
     }
@@ -27,14 +41,16 @@ public class RGMessageView: UIView {
         super.init(coder: aDecoder)
     }
 
-    public func layoutMessage(message: RGMessage) {
+    /// Prepare the view for displaying a new message
+    public func layoutMessage(message: RGMessage) {}
 
-    }
+    /// Clear the view of any filled-in data
+    public func prepareForReuse() {}
 
-    public func prepareForReuse() {
-
-    }
-
+    /**
+     * A small utility method for disabling autoresizing masks for 
+     * autolayout to work properly
+     */
     func disableTranslatingAutoresizing(view: UIView?) {
         guard let actualView = view else {
             return

@@ -1,6 +1,6 @@
 //
 //  RGMessagePresenter.swift
-//  Pods
+//  RGSnackBar
 //
 //  Created by Jakub Darowski on 30.08.2017.
 //
@@ -31,7 +31,25 @@ public protocol RGMessagePresenter {
     func dismiss(message: RGMessage)
 }
 
+/**
+ * The delegate that should react to presenter events.
+ */
 public protocol RGMessagePresenterDelegate: class {
+    /**
+     * Should be called whenever the presenter finished presenting 
+     * (e.g. animating) the message.
+     *
+     * - Parameter _: the presenter, self
+     * - Parameter message: message that was shown
+     */
     func presenter(_: RGMessagePresenter, didPresent message: RGMessage)
+
+    /**
+     * Should be called whenever the presenter finished dismissing
+     * (e.g. animating) the message.
+     *
+     * - Parameter _: the presenter, self
+     * - Parameter message: message that was dismissed
+     */
     func presenter(_: RGMessagePresenter, didDismiss message: RGMessage)
 }

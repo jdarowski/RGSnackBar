@@ -1,6 +1,6 @@
 //
 //  RGMessageSnackBarPresenter.swift
-//  Pods
+//  RGSnackBar
 //
 //  Created by Jakub Darowski on 04/09/2017.
 //
@@ -8,17 +8,43 @@
 
 import UIKit
 
+/**
+ * The main presenter class for this library.
+ *
+ * This presenter shows the message in a snackbar using the given animation.
+ */
 public class RGMessageSnackBarPresenter: RGMessagePresenter {
+    /// Delegate
     weak public var delegate: RGMessagePresenterDelegate?
 
-    var animation: RGMessageSnackBarAnimation
-    var destinationView: UIView
+    /// What should I present?
     var snackBarView: RGMessageSnackBarView
 
-    var tapGestureRecognizer: UITapGestureRecognizer?
+    /// How should I present it?
+    var animation: RGMessageSnackBarAnimation
+
+    /// Where should I present it?
+    var destinationView: UIView
+
+    private var tapGestureRecognizer: UITapGestureRecognizer?
     private var timer: NSTimer?
 
-    public init(view: UIView, animation: RGMessageSnackBarAnimation, bottomMargin: CGFloat=20.0, sideMargins: CGFloat=8.0, cornerRadius: CGFloat=8.0) {
+    /**
+     * The main constructor for the snackbar. It has some values predefined,
+     * but you may customise them as you please.
+     *
+     * - Parameter view: the destination view (or window)
+     * - Parameter bottomMargin: the distance between the `view`'s bottom
+     *   and the snackbar's bottom.
+     * - Parameter sideMargins: the distance between the `view`'s 
+     *   and the snackbar's sides.
+     * - Parameter cornerRadius: how round should the snackbar's corners be
+     */
+    public init(view: UIView,
+                animation: RGMessageSnackBarAnimation=RGMessageSnackBarAnimation.slideUp,
+                bottomMargin: CGFloat=20.0,
+                sideMargins: CGFloat=8.0,
+                cornerRadius: CGFloat=8.0) {
         destinationView = view
         snackBarView = RGMessageSnackBarView(message: nil, containerView: view, bottomMargin: bottomMargin, sideMargins: sideMargins, cornerRadius: cornerRadius)
         self.animation = animation
@@ -32,7 +58,6 @@ public class RGMessageSnackBarPresenter: RGMessagePresenter {
     }
 
     public func present(message: RGMessage) {
-        //        show(message)
         guard NSThread.currentThread().isMainThread else {
             dispatch_async(dispatch_get_main_queue(), {
                 self.present(message)
@@ -70,13 +95,13 @@ public class RGMessageSnackBarPresenter: RGMessagePresenter {
         }
     }
 
-    @objc func tapGestureRecognized(recognizer: UITapGestureRecognizer) {
+    @objc private func tapGestureRecognized(recognizer: UITapGestureRecognizer) {
         if let message = snackBarView.message {
             dismiss(message)
         }
     }
 
-    @objc func displayTimer(timer: NSTimer?) {
+    @objc private func displayTimer(timer: NSTimer?) {
         guard NSThread.currentThread().isMainThread else {
             dispatch_async(dispatch_get_main_queue(), {
                 self.displayTimer(timer)

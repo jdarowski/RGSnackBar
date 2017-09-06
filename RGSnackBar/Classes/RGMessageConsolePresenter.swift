@@ -1,6 +1,6 @@
 //
 //  RGMessageConsolePresenter.swift
-//  Pods
+//  RGSnackBar
 //
 //  Created by Jakub Darowski on 04/09/2017.
 //
