@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// A human-readable message priority.
 public enum RGMessagePriority: Int {
     case verbose    = -200
     case info       = -100
@@ -34,29 +35,48 @@ public enum RGMessagePriority: Int {
     }
 }
 
+/// Pre-defined durations. Use `custom` if pou want a
 public enum RGMessageDuration: NSTimeInterval {
+    /// Custom duration. Set `customDuration` in the constructor!
     case custom = -1.0 // to be used with a provided duration
+    /// 2 seconds. Enough for 2-3 word messages
     case short = 2.0
+    /// 4 seconds. Enough for a whole sentence.
     case long = 4.0
+    /// 8 seconds. Enough for a couple of sentences.
     case extraLong = 8.0
-    case eternal = 1e9 // a billion seconds is close enough to eternity, right?
+    /**
+     * 1,000,000,000 seconds. A billion seconds is close enough
+     * to eternity, right? To be used when user interaction is encouraged.
+     */
+    case eternal = 1e9
 }
 
+/**
+ * The message itself. Besides carryin texs it has priority and actions.
+ * You probably won't achieve much by subclassing this, but go ahead
+ * if you want to
+ */
 public class RGMessage: NSObject, Comparable {
+    /// An optional image to be displayed along the message. Like a tick or sth.
     var image: UIImage?
+    /// The message's message ( ͡° ͜ʖ ͡°)
     var text: String
+    /// Message priority.
     var priority: RGMessagePriority
 
     private var _duration: RGMessageDuration
     private var _customDuration: NSTimeInterval
     private var _actions = [RGAction]()
 
+    /// Get your actions here
     public var actions: [RGAction] {
         get {
             return _actions
         }
     }
 
+    /// The designated initializer. Takes in all you need.
     public init?(text: String,
          image: UIImage?=nil,
          actions: [RGAction]?=nil,
@@ -84,10 +104,19 @@ public class RGMessage: NSObject, Comparable {
         super.init()
     }
 
+    /**
+     * Add an action
+     * - Parameter action: action
+     */
     func add(action: RGAction) {
         _actions.append(action)
     }
 
+    /**
+     * Insert an action where you want it
+     * - Parameter action: action
+     * - Parameter at: index at which to insert
+     */
     func insert(action: RGAction, at index: Int) {
         if index >= _actions.count {
             _actions.append(action)
@@ -97,19 +126,28 @@ public class RGMessage: NSObject, Comparable {
             _actions.insert(action, atIndex: index)
         }
     }
-    
+
+    /**
+     * Remove an action
+     * - Parameter action: action
+     */
     func remove(action: RGAction) {
         if let index = _actions.indexOf(action) {
             _actions.removeAtIndex(index)
         }
     }
-    
+
+    /**
+     * Remove an action at index
+     * - Parameter at: index to remove from
+     */
     func removeAction(at index: Int) {
         if index>=0 && index < _actions.count {
             _actions.removeAtIndex(index)
         }
     }
-    
+
+    /// The actual duration for displaying the message
     var duration: NSTimeInterval {
         if _duration == .custom {
             return _customDuration

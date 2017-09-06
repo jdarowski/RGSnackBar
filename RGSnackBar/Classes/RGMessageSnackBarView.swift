@@ -18,8 +18,15 @@ public class RGMessageSnackBarView: RGMessageView {
     var parentView: UIView
     var presenter: RGMessagePresenter?
 
-    public init(message: RGMessage?, containerView: UIView) {
+    public var bottomMargin: CGFloat
+    public var sideMargins: CGFloat
+    public var cornerRadius: CGFloat
+
+    public init(message: RGMessage?, containerView: UIView, bottomMargin: CGFloat=20.0, sideMargins: CGFloat=8.0, cornerRadius: CGFloat=8.0) {
         parentView = containerView
+        self.bottomMargin = bottomMargin
+        self.sideMargins = sideMargins
+        self.cornerRadius = cornerRadius
         super.init(frame: containerView.frame, message: message)
 
         blurView.effect = UIBlurEffect(style: .Dark)
@@ -34,6 +41,10 @@ public class RGMessageSnackBarView: RGMessageView {
     
     required public init?(coder aDecoder: NSCoder) {
         parentView = UIView()
+        bottomMargin = 0.0
+        sideMargins = 0.0
+        cornerRadius = 0.0
+
         super.init(coder: aDecoder)
     }
 
@@ -46,10 +57,10 @@ public class RGMessageSnackBarView: RGMessageView {
 
         sv(messageLabel, imageView, actionStack)
 
-        self.bottom(20)
+        self.bottom(bottomMargin)
 
         parentView.layout(
-            |-self-|
+            |-sideMargins-self-sideMargins-|
         )
 
         messageLabel.top(8).bottom(8)
@@ -80,7 +91,7 @@ public class RGMessageSnackBarView: RGMessageView {
         blurView.top(0).bottom(0).left(0).right(0)
         sendSubviewToBack(blurView)
         layer.masksToBounds = true
-        layer.cornerRadius = 8.0
+        layer.cornerRadius = self.cornerRadius
     }
 
     override public func layoutMessage(message: RGMessage) {

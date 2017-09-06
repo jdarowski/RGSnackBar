@@ -18,9 +18,9 @@ public class RGMessageSnackBarPresenter: RGMessagePresenter {
     var tapGestureRecognizer: UITapGestureRecognizer?
     private var timer: NSTimer?
 
-    public init(view: UIView, animation: RGMessageSnackBarAnimation) {
+    public init(view: UIView, animation: RGMessageSnackBarAnimation, bottomMargin: CGFloat=20.0, sideMargins: CGFloat=8.0, cornerRadius: CGFloat=8.0) {
         destinationView = view
-        snackBarView = RGMessageSnackBarView(message: nil, containerView: view)
+        snackBarView = RGMessageSnackBarView(message: nil, containerView: view, bottomMargin: bottomMargin, sideMargins: sideMargins, cornerRadius: cornerRadius)
         self.animation = animation
 
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapGestureRecognized(_:)))

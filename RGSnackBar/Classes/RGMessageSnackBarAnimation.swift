@@ -47,10 +47,10 @@ public class RGMessageSnackBarAnimation: NSObject {
     public static let slideUp: RGMessageSnackBarAnimation = RGMessageSnackBarAnimation(preBlock: { (snackBarView, parentView, isPresenting) in
             if isPresenting {
                 let height = snackBarView.frame.size.height
-                snackBarView.bottomConstraint?.constant = height + 20.0
+                snackBarView.bottomConstraint?.constant = height + snackBarView.bottomMargin
                 snackBarView.alpha = 1.0
                 parentView.layoutIfNeeded()
-                snackBarView.bottomConstraint?.constant = -20.0
+                snackBarView.bottomConstraint?.constant = -(snackBarView.bottomMargin)
             } else {
                 snackBarView.bottomConstraint?.constant = snackBarView.frame.size.height
         }

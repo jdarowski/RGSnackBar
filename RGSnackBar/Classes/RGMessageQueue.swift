@@ -1,6 +1,6 @@
 //
 //  RGMessageQueue.swift
-//  Pods
+//  RGSnackBar
 //
 //  Created by Jakub Darowski on 30.08.2017.
 //
@@ -9,15 +9,22 @@
 import UIKit
 import SwiftPriorityQueue
 
+
+/**
+ * A priority queue for RGMessages. It accepts messages and later passes
+ * them on to the specified presenter in the proper order.
+ */
+
 public class RGMessageQueue: NSObject {
     private var _messages = PriorityQueue<RGMessage>()
     private var _messageBeingShown: RGMessage?
     private var _operationQueue = NSOperationQueue()
-
-    public var presenter: RGMessagePresenter
-
     private static var instanceCounter: UInt = 0
 
+    /// The RGMessagePresenter to be used for presenting messages
+    public var presenter: RGMessagePresenter
+
+    /// TODO: say something meaningful
     public init(presenter: RGMessagePresenter) {
         self.presenter = presenter
         _operationQueue.qualityOfService = .Background
@@ -27,7 +34,12 @@ public class RGMessageQueue: NSObject {
         self.presenter.delegate = self
         RGMessageQueue.instanceCounter += 1
     }
-    
+
+    /**
+     * Enqueues the `message` and presents it if none is being presented.
+     *
+     * - Parameter message: message to be pushed
+     */
     public func push(message: RGMessage) {
         _operationQueue.addOperationWithBlock({
             self._messages.push(message)
@@ -40,6 +52,7 @@ public class RGMessageQueue: NSObject {
         })
     }
 
+    /// Present next message if there is one.
     func showNextMessage() {
         guard let queue = NSOperationQueue.currentQueue() where queue == _operationQueue else {
             _operationQueue.addOperationWithBlock({ self.showNextMessage() })

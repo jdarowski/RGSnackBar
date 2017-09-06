@@ -8,25 +8,39 @@
 
 import UIKit
 
-class RGActionButton: UIButton {
+/**
+ * The snackbar action button.
+ *
+ * This button has one purpose: perform teh action assigned to it. If you want
+ * a custom button, just subclass this. Or edit the layers. Whatever you need.
+ */
+public class RGActionButton: UIButton {
 
-    var action: RGAction
+    /// The action to be performed
+    public var action: RGAction
 
-    init(action: RGAction) {
+    /**
+     * The default constructor. You don't really need another one.
+     * 
+     * Must be called even when overrided. Otherwise you'll need to add the
+     * target to the button manually.
+     */
+    public init(action: RGAction) {
         self.action = action
         super.init(frame: .zero)
 
         self.setTitle(action.title, forState: .Normal)
         self.addTarget(self, action: #selector(performAction(_:)), forControlEvents: .TouchUpInside)
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
+
+    /// This is a stub. Should not be used really yet.
+    public required init?(coder aDecoder: NSCoder) {
         self.action = RGAction(title: "", action: nil)
         super.init(coder: aDecoder)
     }
 
-    func performAction(sender: RGActionButton) {
+    /// Simply launches the action. Don't touch this please.
+    @objc private func performAction(sender: RGActionButton) {
         action.action?(action)
     }
 

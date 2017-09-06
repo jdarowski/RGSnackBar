@@ -31,15 +31,10 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
 
         if let window = UIApplication.sharedApplication().keyWindow {
-            messageQueue = RGMessageQueue(presenter: RGMessageSnackBarPresenter(view: view, animation: RGMessageSnackBarAnimation.slideUp))
+            messageQueue = RGMessageQueue(presenter: RGMessageSnackBarPresenter(view: view, animation: RGMessageSnackBarAnimation.slideUp, bottomMargin: 20.0, sideMargins: 8.0, cornerRadius: 8.0))
         } else {
-//            messageQueue = RGMessageQueue(presenter: RGMessageSnackBarPresenter(view: view))
+            messageQueue = RGMessageQueue(presenter: RGMessageSnackBarPresenter(view: view, animation: RGMessageSnackBarAnimation.zoomIn))
         }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     @IBAction func enqueueButtonPressed(sender: AnyObject) {
