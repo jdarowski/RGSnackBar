@@ -21,10 +21,12 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ## Requirements
 
 * Swift 2.3
-
+* iOS 9.3
 
 For now RGSnackBar runs on Swift 2.3 as that's what I personally need, but it
 will be migrated to Swift 3 and later Swift 4 when needed.
+
+The target platform is iOS 9.0, but I have tested it on 9.3 only, so please be careful
 
 ## Installation
 
@@ -37,7 +39,13 @@ pod "RGSnackBar"
 
 ## Author
 
-jdarowski, kuvisit@gmail.com
+[Me](/jdarowski), a Senior iOS Developer at 
+[Reality Games](https://wearerealitygames.com/). 
+
+## Contributing
+
+Feel free to fork this repository, make your changes and create a pull request.
+Your additions are very welcome! 😉
 
 ## License
 
