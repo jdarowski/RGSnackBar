@@ -39,7 +39,7 @@ pod "RGSnackBar"
 
 ## Author
 
-[Me](/jdarowski), a Senior iOS Developer at 
+[Me](https://github.com/jdarowski/), a Senior iOS Developer at 
 [Reality Games](https://wearerealitygames.com/). 
 
 ## Contributing
