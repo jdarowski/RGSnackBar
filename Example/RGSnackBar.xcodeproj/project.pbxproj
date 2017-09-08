@@ -15,6 +15,7 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		7032F1FAF5829A54EE5D5E0C /* Pods_RGSnackBar_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF417FE552F659E0F0816728 /* Pods_RGSnackBar_Tests.framework */; };
+		F1F74C1D1F61909A0093D31D /* MutableCollectionType+shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F74C1C1F61909A0093D31D /* MutableCollectionType+shuffle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		A3EB97CEED9FCCC95FABD996 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		B771BACB45B9157D0F506B3D /* Pods-RGSnackBar_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RGSnackBar_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RGSnackBar_Example/Pods-RGSnackBar_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		BD6722AA42CC50B6E6CF0EFB /* Pods-RGSnackBar_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RGSnackBar_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RGSnackBar_Tests/Pods-RGSnackBar_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		F1F74C1C1F61909A0093D31D /* MutableCollectionType+shuffle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MutableCollectionType+shuffle.swift"; sourceTree = "<group>"; };
 		FF417FE552F659E0F0816728 /* Pods_RGSnackBar_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RGSnackBar_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -110,6 +112,7 @@
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
+				F1F74C1C1F61909A0093D31D /* MutableCollectionType+shuffle.swift */,
 			);
 			name = "Example for RGSnackBar";
 			path = RGSnackBar;
@@ -220,6 +223,7 @@
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = PURCQ23PS9;
 						LastSwiftMigration = 0820;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -376,6 +380,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				F1F74C1D1F61909A0093D31D /* MutableCollectionType+shuffle.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -541,6 +546,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BD6722AA42CC50B6E6CF0EFB /* Pods-RGSnackBar_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = PURCQ23PS9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -561,6 +567,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 86AB3D8E264E72DEB48BAF28 /* Pods-RGSnackBar_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = PURCQ23PS9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

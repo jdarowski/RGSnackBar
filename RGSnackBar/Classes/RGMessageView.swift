@@ -44,6 +44,12 @@ public class RGMessageView: UIView {
     /// Prepare the view for displaying a new message
     public func layoutMessage(message: RGMessage) {}
 
+    /**
+     * Apply styles. Should be called whenever style is changed or the view
+     * has been changed in any way.
+     */
+    public func style() {}
+
     /// Clear the view of any filled-in data
     public func prepareForReuse() {}
 

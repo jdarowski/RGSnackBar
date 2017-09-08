@@ -18,10 +18,10 @@ public class RGMessageSnackBarPresenter: RGMessagePresenter {
     weak public var delegate: RGMessagePresenterDelegate?
 
     /// What should I present?
-    var snackBarView: RGMessageSnackBarView
+    public var snackBarView: RGMessageSnackBarView
 
     /// How should I present it?
-    var animation: RGMessageSnackBarAnimation
+    public var animation: RGMessageSnackBarAnimation
 
     /// Where should I present it?
     var destinationView: UIView

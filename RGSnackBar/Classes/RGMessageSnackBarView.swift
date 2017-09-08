@@ -27,14 +27,38 @@ public class RGMessageSnackBarView: RGMessageView {
     /// A reference to the presenter which is presenting the snackbar
     var presenter: RGMessagePresenter?
 
+    // ---- BEGIN STYLES -------------------------------------------------------
     /// The distance between the snackbar's and `parentView`'s bottoms
-    public var bottomMargin: CGFloat
+    public var bottomMargin: CGFloat { didSet { style() } }
 
     /// The distance between the snackbar's and `parentView`'s sides
-    public var sideMargins: CGFloat
+    public var sideMargins: CGFloat { didSet { style() } }
 
     /// Amount of curviness you desire
-    public var cornerRadius: CGFloat
+    public var cornerRadius: CGFloat { didSet { style() } }
+
+    /// Font size for the message label
+    public var textFontSize: CGFloat = 17.0 { didSet { style() } }
+
+    /// Font size for the action buttons
+    public var buttonFontSize: CGFloat = 17.0 { didSet { style() } }
+
+    /// Font color for the message label
+    public var textFontColor: UIColor = UIColor.whiteColor() {
+        didSet { style() }
+    }
+
+    /// Font color for the action buttons
+    public var buttonFontColor: UIColor = UIColor.orangeColor() {
+        didSet { style() }
+    }
+
+    /// Background blur effect
+    public var backgroundBlurEffect = UIBlurEffect(style: .Dark) {
+        didSet { style() }
+    }
+
+    // ----  END STYLES  -------------------------------------------------------
 
     /**
      * The main constructor
@@ -59,7 +83,6 @@ public class RGMessageSnackBarView: RGMessageView {
         self.cornerRadius = cornerRadius
         super.init(frame: containerView.frame, message: message)
 
-        blurView.effect = UIBlurEffect(style: .Dark)
         self.backgroundColor = UIColor.clearColor()
 
         self.alpha = 0.0
@@ -120,8 +143,6 @@ public class RGMessageSnackBarView: RGMessageView {
         blurView.frame = self.frame
         blurView.top(0).bottom(0).left(0).right(0)
         sendSubviewToBack(blurView)
-        layer.masksToBounds = true
-        layer.cornerRadius = self.cornerRadius
     }
 
     override public func layoutMessage(message: RGMessage) {
@@ -130,15 +151,14 @@ public class RGMessageSnackBarView: RGMessageView {
         let imageDimension: CGFloat = imageView.image == nil ? 0.0 : 25.0
         imageView.width(imageDimension).height(imageDimension)
 
-        if message.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 30  {
+        if message.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 30
+            || message.actions.count > 2 {
             actionStack.axis = .Vertical
         } else {
             actionStack.axis = .Horizontal
         }
         for action in message.actions {
             let button = RGActionButton(action: action)
-            button.setTitleColor(UIColor.orangeColor(),
-                                 forState: .Normal)
             button.addTarget(self,
                              action: #selector(actionTapped(_:)),
                              forControlEvents: .TouchUpInside)
@@ -146,7 +166,47 @@ public class RGMessageSnackBarView: RGMessageView {
                                                            forAxis: .Horizontal)
             actionStack.addArrangedSubview(button)
         }
+        style()
         layoutIfNeeded()
+    }
+
+    override public func style() {
+
+        // Buttons
+        for button in actionStack.arrangedSubviews where button is UIButton {
+            guard let butt = button as? UIButton else { // 😏
+                continue
+            }
+            butt.setTitleColor(buttonFontColor,
+                                 forState: .Normal)
+            var newFont: UIFont
+            if let font = butt.titleLabel?.font {
+                newFont = font.fontWithSize(buttonFontSize)
+            } else {
+                newFont = UIFont.systemFontOfSize(buttonFontSize)
+            }
+            butt.titleLabel?.font = newFont
+        }
+
+        // Message
+        messageLabel.font = messageLabel.font.fontWithSize(textFontSize)
+        messageLabel.textColor = textFontColor
+
+        // Constraints
+        self.bottomConstraint?.constant = -(bottomMargin)
+        self.leftConstraint?.constant = sideMargins
+        self.rightConstraint?.constant = -(sideMargins)
+
+        // Corners
+        layer.cornerRadius = cornerRadius
+        layer.masksToBounds = cornerRadius > 0.0
+
+        // Background
+        blurView.effect = backgroundBlurEffect
+
+        // Tell UIKit what you want!
+        setNeedsLayout()
+        superview?.layoutIfNeeded()
     }
 
     override public func prepareForReuse() {
