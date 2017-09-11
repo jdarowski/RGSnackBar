@@ -9,14 +9,13 @@
 
 ## About
 
-![Totally customizable](Assets/customization.gif)
+![Totally customizable](Assets/customization.gif =x320)
+![Slide up animation!](Assets/slideup.gif =x320)
+![Zoom in animation!](Assets/zoomin.gif =x320)
 
 This library was created during the development of one of 
 [Reality Games'](https://wearerealitygames.com/) games out of need. It has all
 the features I needed during development and plenty of room for extensions
-
-![Slide up animation!](Assets/slideup.gif)
-![Zoom in animation!](Assets/zoomin.gif)
 
 ## Example
 
