@@ -9,9 +9,7 @@
 
 ## About
 
-<img src="Assets/customization.gif" width="320" height="568" alt="Total customization!" />
-<img src="Assets/slideup.gif" width="320" height="568" alt="Slide up animation!" />
-<img src="Assets/zoomin.gif" width="320" height="568" alt="Zoom in animation!" />
+<img src="Assets/customization.gif" width="320" height="568" alt="Total customization!" style="display:inline-block" /> <img src="Assets/slideup.gif" width="320" height="568" alt="Slide up animation!" style="display:inline-block" /> <img src="Assets/zoomin.gif" width="320" height="568" alt="Zoom in animation!" style="display:inline-block" />
 
 This library was created during the development of one of 
 [Reality Games'](https://wearerealitygames.com/) games out of need. It has all
