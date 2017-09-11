@@ -9,6 +9,8 @@
 
 ## About
 
+
+![Totally customizable](Assets/customization.gif) ![Slide up animation!](Assets/slideup.gif) ![Zoom in animation!](Assets/zoomin.gif)
 This library was created during the development of one of 
 [Reality Games'](https://wearerealitygames.com/) games out of need. It has all
 the features I needed during development and plenty of room for extensions
@@ -41,6 +43,14 @@ pod "RGSnackBar"
 
 [Me](https://github.com/jdarowski/), a Senior iOS Developer at 
 [Reality Games](https://wearerealitygames.com/). 
+
+## Changelog
+
+* 0.1
+    * Initial release
+* 0.2
+    * Easier styling
+    * Better example
 
 ## Contributing
 
