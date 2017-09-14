@@ -42,7 +42,7 @@ Basically you'll need an `RGMessageQueue` with some kind of `RGMessagePresenter`
 * Prioritized messages thanks to [SwiftPriorityQueue](https://github.com/davecom/SwiftPriorityQueue)
 * Easy and dynamic layout for `RGSnackBarPresenter` thanks to [Stevia](https://github.com/freshOS/Stevia)
 * Completely customizable animations for `RGSnackBarView` with _slide up_ and _zoom in_ already made
-* Base class `RGMessage` for endless possibilities - want a snack bar? Here! Want a banner? Make one!
+* Base class `RGMessageView` for endless possibilities - want a snack bar? Here! Want a banner? Make one!
 
 ## Example
 
