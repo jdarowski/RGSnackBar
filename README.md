@@ -15,10 +15,6 @@ This library was created during the development of one of
 [Reality Games'](https://wearerealitygames.com/) games out of need. It has all
 the features I needed during development and plenty of room for extensions
 
-## Example
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
 ## Requirements
 
 * Swift 2.3
@@ -37,6 +33,20 @@ it, simply add the following line to your Podfile:
 ```ruby
 pod "RGSnackBar"
 ```
+## Usage
+
+Basically you'll need an `RGMessageQueue` with some kind of `RGMessagePresenter`. **How** you decide to do it is completely up to you. This lib comes with two presenters: `RGMessageConsolePresenter` and `RGMessageSnackBarPresenter`, but I **strongly** encourage you to write your own presenters for anything you like. Perhaps a system-banner like presentation? Who knows? Only you. ( ͡° ͜ʖ ͡° ) 
+
+## Features
+
+* Prioritized messages thanks to [SwiftPriorityQueue](https://github.com/davecom/SwiftPriorityQueue)
+* Easy and dynamic layout for `RGSnackBarPresenter` thanks to [Stevia](https://github.com/freshOS/Stevia)
+* Completely customizable animations for `RGSnackBarView` with _slide up_ and _zoom in_ already made
+* Base class `RGMessage` for endless possibilities - want a snack bar? Here! Want a banner? Make one!
+
+## Example
+
+To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Author
 
