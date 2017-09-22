@@ -13,10 +13,10 @@ public typealias RGActionBlock = ((RGAction) -> Void)
 /**
  * Action for the snackbar. Can have a title and an action block. What else would you need?
  */
-public class RGAction: NSObject {
+open class RGAction: NSObject {
 
-    public var title: String
-    public var action: RGActionBlock?
+    open var title: String
+    open var action: RGActionBlock?
 
     public init(title: String, action: RGActionBlock?) {
         self.title = title

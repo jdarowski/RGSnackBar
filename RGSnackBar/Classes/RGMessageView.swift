@@ -14,10 +14,10 @@ import UIKit
  * Provides the basic variables and methods as well as some handy utility
  * methods. Base for all potential message-displaying views.
  */
-public class RGMessageView: UIView {
+open class RGMessageView: UIView {
 
     /// The message to be displayed in the view
-    public var message: RGMessage? {
+    open var message: RGMessage? {
         didSet {
             prepareForReuse()
             if let msg = message {
@@ -42,22 +42,22 @@ public class RGMessageView: UIView {
     }
 
     /// Prepare the view for displaying a new message
-    public func layoutMessage(message: RGMessage) {}
+    open func layoutMessage(_ message: RGMessage) {}
 
     /**
      * Apply styles. Should be called whenever style is changed or the view
      * has been changed in any way.
      */
-    public func style() {}
+    open func style() {}
 
     /// Clear the view of any filled-in data
-    public func prepareForReuse() {}
+    open func prepareForReuse() {}
 
     /**
      * A small utility method for disabling autoresizing masks for 
      * autolayout to work properly
      */
-    func disableTranslatingAutoresizing(view: UIView?) {
+    func disableTranslatingAutoresizing(_ view: UIView?) {
         guard let actualView = view else {
             return
         }

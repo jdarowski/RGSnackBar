@@ -13,21 +13,21 @@ import UIKit
  *
  * This presenter shows the message in a snackbar using the given animation.
  */
-public class RGMessageSnackBarPresenter: RGMessagePresenter {
+open class RGMessageSnackBarPresenter: RGMessagePresenter {
     /// Delegate
-    weak public var delegate: RGMessagePresenterDelegate?
+    weak open var delegate: RGMessagePresenterDelegate?
 
     /// What should I present?
-    public var snackBarView: RGMessageSnackBarView
+    open var snackBarView: RGMessageSnackBarView
 
     /// How should I present it?
-    public var animation: RGMessageSnackBarAnimation
+    open var animation: RGMessageSnackBarAnimation
 
     /// Where should I present it?
     var destinationView: UIView
 
-    private var tapGestureRecognizer: UITapGestureRecognizer?
-    private var timer: NSTimer?
+    fileprivate var tapGestureRecognizer: UITapGestureRecognizer?
+    fileprivate var timer: Timer?
 
     /**
      * The main constructor for the snackbar. It has some values predefined,
@@ -57,9 +57,9 @@ public class RGMessageSnackBarPresenter: RGMessagePresenter {
         snackBarView.alpha = 0.0
     }
 
-    public func present(message: RGMessage) {
-        guard NSThread.currentThread().isMainThread else {
-            dispatch_async(dispatch_get_main_queue(), {
+    open func present(_ message: RGMessage) {
+        guard Thread.current.isMainThread else {
+            DispatchQueue.main.async(execute: {
                 self.present(message)
             })
             return
@@ -67,18 +67,18 @@ public class RGMessageSnackBarPresenter: RGMessagePresenter {
         snackBarView.message = message
 
         animation.preAnimationBlock?(snackBarView, destinationView, true)
-        UIView.animateWithDuration(animation.animationDuration, delay: 0.0, options: .CurveEaseOut, animations: {
+        UIView.animate(withDuration: animation.animationDuration, delay: 0.0, options: .curveEaseOut, animations: {
             self.animation.animationBlock(self.snackBarView, self.destinationView, true)
         }) { (finished) in
             self.animation.postAnimationBlock?(self.snackBarView, self.destinationView, true)
             self.delegate?.presenter(self, didPresent: message)
-            self.timer = NSTimer.scheduledTimerWithTimeInterval(message.duration, target: self, selector: #selector(self.displayTimer(_:)), userInfo: nil, repeats: false)
+            self.timer = Timer.scheduledTimer(timeInterval: message.duration, target: self, selector: #selector(self.displayTimer(_:)), userInfo: nil, repeats: false)
         }
     }
 
-    public func dismiss(message: RGMessage) {
-        guard NSThread.currentThread().isMainThread else {
-            dispatch_async(dispatch_get_main_queue(), {
+    open func dismiss(_ message: RGMessage) {
+        guard Thread.current.isMainThread else {
+            DispatchQueue.main.async(execute: {
                 self.dismiss(message)
             })
             return
@@ -86,7 +86,7 @@ public class RGMessageSnackBarPresenter: RGMessagePresenter {
 
         timer?.invalidate()
         animation.preAnimationBlock?(snackBarView, destinationView, false)
-        UIView.animateWithDuration(animation.animationDuration, delay: 0.0, options: .CurveEaseOut, animations: {
+        UIView.animate(withDuration: animation.animationDuration, delay: 0.0, options: .curveEaseOut, animations: {
             self.animation.animationBlock(self.snackBarView, self.destinationView, false)
         }) { (finished) in
             self.animation.postAnimationBlock?(self.snackBarView, self.destinationView, false)
@@ -95,15 +95,15 @@ public class RGMessageSnackBarPresenter: RGMessagePresenter {
         }
     }
 
-    @objc private func tapGestureRecognized(recognizer: UITapGestureRecognizer) {
+    @objc fileprivate func tapGestureRecognized(_ recognizer: UITapGestureRecognizer) {
         if let message = snackBarView.message {
             dismiss(message)
         }
     }
 
-    @objc private func displayTimer(timer: NSTimer?) {
-        guard NSThread.currentThread().isMainThread else {
-            dispatch_async(dispatch_get_main_queue(), {
+    @objc fileprivate func displayTimer(_ timer: Timer?) {
+        guard Thread.current.isMainThread else {
+            DispatchQueue.main.async(execute: {
                 self.displayTimer(timer)
             })
             return

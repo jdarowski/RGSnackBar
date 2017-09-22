@@ -14,10 +14,10 @@ import UIKit
  * This button has one purpose: perform teh action assigned to it. If you want
  * a custom button, just subclass this. Or edit the layers. Whatever you need.
  */
-public class RGActionButton: UIButton {
+open class RGActionButton: UIButton {
 
     /// The action to be performed
-    public var action: RGAction
+    open var action: RGAction
 
     /**
      * The default constructor. You don't really need another one.
@@ -29,8 +29,8 @@ public class RGActionButton: UIButton {
         self.action = action
         super.init(frame: .zero)
 
-        self.setTitle(action.title, forState: .Normal)
-        self.addTarget(self, action: #selector(performAction(_:)), forControlEvents: .TouchUpInside)
+        self.setTitle(action.title, for: UIControlState())
+        self.addTarget(self, action: #selector(performAction(_:)), for: .touchUpInside)
     }
 
     /// This is a stub. Should not be used really yet.
@@ -40,7 +40,7 @@ public class RGActionButton: UIButton {
     }
 
     /// Simply launches the action. Don't touch this please.
-    @objc private func performAction(sender: RGActionButton) {
+    @objc fileprivate func performAction(_ sender: RGActionButton) {
         action.action?(action)
     }
 

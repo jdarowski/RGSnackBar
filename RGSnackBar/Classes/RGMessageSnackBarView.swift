@@ -7,19 +7,19 @@
 //
 
 import UIKit
-import SteviaLayout
+import Stevia
 
 /**
  * The generic snack bar.
  *
  *
  */
-public class RGMessageSnackBarView: RGMessageView {
+open class RGMessageSnackBarView: RGMessageView {
 
-    private var imageView = UIImageView()
-    private var messageLabel = UILabel()
-    private var blurView = UIVisualEffectView()
-    private var actionStack = UIStackView()
+    fileprivate var imageView = UIImageView()
+    fileprivate var messageLabel = UILabel()
+    fileprivate var blurView = UIVisualEffectView()
+    fileprivate var actionStack = UIStackView()
 
     /// The view in which the message will be displayed
     var parentView: UIView
@@ -29,32 +29,32 @@ public class RGMessageSnackBarView: RGMessageView {
 
     // ---- BEGIN STYLES -------------------------------------------------------
     /// The distance between the snackbar's and `parentView`'s bottoms
-    public var bottomMargin: CGFloat { didSet { style() } }
+    open var bottomMargin: CGFloat { didSet { style() } }
 
     /// The distance between the snackbar's and `parentView`'s sides
-    public var sideMargins: CGFloat { didSet { style() } }
+    open var sideMargins: CGFloat { didSet { style() } }
 
     /// Amount of curviness you desire
-    public var cornerRadius: CGFloat { didSet { style() } }
+    open var cornerRadius: CGFloat { didSet { style() } }
 
     /// Font size for the message label
-    public var textFontSize: CGFloat = 17.0 { didSet { style() } }
+    open var textFontSize: CGFloat = 17.0 { didSet { style() } }
 
     /// Font size for the action buttons
-    public var buttonFontSize: CGFloat = 17.0 { didSet { style() } }
+    open var buttonFontSize: CGFloat = 17.0 { didSet { style() } }
 
     /// Font color for the message label
-    public var textFontColor: UIColor = UIColor.whiteColor() {
+    open var textFontColor: UIColor = UIColor.white {
         didSet { style() }
     }
 
     /// Font color for the action buttons
-    public var buttonFontColor: UIColor = UIColor.orangeColor() {
+    open var buttonFontColor: UIColor = UIColor.orange {
         didSet { style() }
     }
 
     /// Background blur effect
-    public var backgroundBlurEffect = UIBlurEffect(style: .Dark) {
+    open var backgroundBlurEffect = UIBlurEffect(style: .dark) {
         didSet { style() }
     }
 
@@ -83,7 +83,7 @@ public class RGMessageSnackBarView: RGMessageView {
         self.cornerRadius = cornerRadius
         super.init(frame: containerView.frame, message: message)
 
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear
 
         self.alpha = 0.0
         parentView.addSubview(self)
@@ -101,7 +101,7 @@ public class RGMessageSnackBarView: RGMessageView {
         super.init(coder: aDecoder)
     }
 
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         self.layoutMainView()
     }
@@ -126,51 +126,51 @@ public class RGMessageSnackBarView: RGMessageView {
         sv(blurView)
 
         messageLabel.numberOfLines = 0
-        messageLabel.textColor = UIColor.whiteColor()
-        messageLabel.setContentHuggingPriority(0, forAxis: .Horizontal)
+        messageLabel.textColor = UIColor.white
+        messageLabel.setContentHuggingPriority(0, for: .horizontal)
 
-        imageView.contentMode = .ScaleAspectFit
+        imageView.contentMode = .scaleAspectFit
         imageView.top(>=8).bottom(>=8)
 
         actionStack.top(8.0).bottom(8.0)
-        actionStack.alignment = .Center
-        actionStack.axis = .Horizontal
-        actionStack.distribution = .EqualSpacing
+        actionStack.alignment = .center
+        actionStack.axis = .horizontal
+        actionStack.distribution = .equalSpacing
         actionStack.spacing = 10.0
         actionStack.setContentCompressionResistancePriority(900,
-                                                        forAxis: .Horizontal)
+                                                        for: .horizontal)
 
         blurView.frame = self.frame
         blurView.top(0).bottom(0).left(0).right(0)
-        sendSubviewToBack(blurView)
+        sendSubview(toBack: blurView)
     }
 
-    override public func layoutMessage(message: RGMessage) {
+    override open func layoutMessage(_ message: RGMessage) {
         messageLabel.text = message.text
         imageView.image = message.image
         let imageDimension: CGFloat = imageView.image == nil ? 0.0 : 25.0
         imageView.width(imageDimension).height(imageDimension)
 
-        if message.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 30
+        if message.text.lengthOfBytes(using: String.Encoding.utf8) > 30
             || message.actions.count > 2 {
-            actionStack.axis = .Vertical
+            actionStack.axis = .vertical
         } else {
-            actionStack.axis = .Horizontal
+            actionStack.axis = .horizontal
         }
         for action in message.actions {
             let button = RGActionButton(action: action)
             button.addTarget(self,
                              action: #selector(actionTapped(_:)),
-                             forControlEvents: .TouchUpInside)
+                             for: .touchUpInside)
             button.setContentCompressionResistancePriority(1000,
-                                                           forAxis: .Horizontal)
+                                                           for: .horizontal)
             actionStack.addArrangedSubview(button)
         }
         style()
         layoutIfNeeded()
     }
 
-    override public func style() {
+    override open func style() {
 
         // Buttons
         for button in actionStack.arrangedSubviews where button is UIButton {
@@ -178,18 +178,18 @@ public class RGMessageSnackBarView: RGMessageView {
                 continue
             }
             butt.setTitleColor(buttonFontColor,
-                                 forState: .Normal)
+                                 for: UIControlState())
             var newFont: UIFont
             if let font = butt.titleLabel?.font {
-                newFont = font.fontWithSize(buttonFontSize)
+                newFont = font.withSize(buttonFontSize)
             } else {
-                newFont = UIFont.systemFontOfSize(buttonFontSize)
+                newFont = UIFont.systemFont(ofSize: buttonFontSize)
             }
             butt.titleLabel?.font = newFont
         }
 
         // Message
-        messageLabel.font = messageLabel.font.fontWithSize(textFontSize)
+        messageLabel.font = messageLabel.font.withSize(textFontSize)
         messageLabel.textColor = textFontColor
 
         // Constraints
@@ -209,7 +209,7 @@ public class RGMessageSnackBarView: RGMessageView {
         superview?.layoutIfNeeded()
     }
 
-    override public func prepareForReuse() {
+    override open func prepareForReuse() {
         messageLabel.text = nil
         imageView.image = nil
         for view in actionStack.arrangedSubviews {
@@ -217,7 +217,7 @@ public class RGMessageSnackBarView: RGMessageView {
         }
     }
 
-    @objc private func actionTapped(sender: RGActionButton?) {
+    @objc fileprivate func actionTapped(_ sender: RGActionButton?) {
         if let msg = self.message {
             presenter?.dismiss(msg)
         }

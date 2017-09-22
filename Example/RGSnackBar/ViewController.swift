@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var buttonFontSizeTextField: UITextField!
     @IBOutlet weak var labelFontSizeTextField: UITextField!
 
-    let textFieldNumberFormatter = NSNumberFormatter()
+    let textFieldNumberFormatter = NumberFormatter()
 
     @IBOutlet weak var scrollView: UIScrollView?
 
@@ -73,16 +73,16 @@ class ViewController: UIViewController {
         scrollView?.addGestureRecognizer(tapGestureRecognizer)
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         stepperValueChanged(numberOfActionsStepper)
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if let window = UIApplication.sharedApplication().keyWindow {
+        if let window = UIApplication.shared.keyWindow {
             presenter = RGMessageSnackBarPresenter(view: window,
                                                    animation: RGMessageSnackBarAnimation.slideUp,
                                                    bottomMargin: 20.0,
@@ -99,20 +99,20 @@ class ViewController: UIViewController {
         sliderValueChanged(buttonFontSizeSlider)
         sliderValueChanged(labelFontSizeSlider)
         animationControlValueChanged(animationControl)
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        notificationCenter.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
-    @IBAction func animationControlValueChanged(sender: UISegmentedControl) {
+    @IBAction func animationControlValueChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 1:
             presenter?.animation = RGMessageSnackBarAnimation.zoomIn
@@ -121,7 +121,7 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func enqueueButtonPressed(sender: AnyObject) {
+    @IBAction func enqueueButtonPressed(_ sender: AnyObject) {
 
         randomActionNames.shuffleInPlace()
         var duration: RGMessageDuration
@@ -157,49 +157,51 @@ class ViewController: UIViewController {
             actions.append(RGAction(title: randomActionNames[i], action: { print($0.title) }))
         }
 
-        if let rgmessage = RGMessage(text: message, image: nil, priority: priority, actions: actions, duration: duration) {
+        if let rgmessage = RGMessage(text: message, image: nil, actions: actions, priority: priority, duration: duration) {
             messageQueue.push(rgmessage)
         }
     }
 
-    @IBAction func stepperValueChanged(sender: UIStepper) {
+    @IBAction func stepperValueChanged(_ sender: UIStepper) {
         numberOfActions = Int(sender.value)
         numberOfActionsTextField.text = "\(numberOfActions)"
     }
 
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
 
-    @IBAction func sliderValueChanged(sender: UISlider) {
-        let value = CGFloat(sender.value)
+    @IBAction func sliderValueChanged(_ sender: UISlider) {
+        let value = sender.value
+        let numberValue = NSNumber(value: value)
+        let cgFloatValue = CGFloat(value)
         switch sender {
         case bottomMarginSlider:
-            presenter?.snackBarView.bottomMargin = value
-            bottomMarginTextField.text = textFieldNumberFormatter.stringFromNumber(value)
+            presenter?.snackBarView.bottomMargin = cgFloatValue
+            bottomMarginTextField.text = textFieldNumberFormatter.string(from: numberValue)
         case sideMarginsSlider:
-            presenter?.snackBarView.sideMargins = value
-            sideMarginsTextField.text = textFieldNumberFormatter.stringFromNumber(value)
+            presenter?.snackBarView.sideMargins = cgFloatValue
+            sideMarginsTextField.text = textFieldNumberFormatter.string(from: numberValue)
         case cornerRadiusSlider:
-            presenter?.snackBarView.cornerRadius = value
-            cornerRadiusTextField.text = textFieldNumberFormatter.stringFromNumber(value)
+            presenter?.snackBarView.cornerRadius = cgFloatValue
+            cornerRadiusTextField.text = textFieldNumberFormatter.string(from: numberValue)
         case buttonFontSizeSlider:
-            presenter?.snackBarView.buttonFontSize = value
-            buttonFontSizeTextField.text = textFieldNumberFormatter.stringFromNumber(value)
+            presenter?.snackBarView.buttonFontSize = cgFloatValue
+            buttonFontSizeTextField.text = textFieldNumberFormatter.string(from: numberValue)
         case labelFontSizeSlider:
-            presenter?.snackBarView.textFontSize = value
-            labelFontSizeTextField.text = textFieldNumberFormatter.stringFromNumber(value)
+            presenter?.snackBarView.textFontSize = cgFloatValue
+            labelFontSizeTextField.text = textFieldNumberFormatter.string(from: numberValue)
         default:
             print("Unknown slider ;o")
         }
     }
 
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: Notification) {
         let userInfo = notification.userInfo!
-        let keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue().height
+        let keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
 
         let animationDuration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        let animationCurve = UIViewAnimationCurve(rawValue:(userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue)!
+        let animationCurve = UIViewAnimationCurve(rawValue:(userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).intValue)!
 
         if var insets = self.scrollView?.contentInset {
             insets.bottom += keyboardHeight
@@ -207,7 +209,7 @@ class ViewController: UIViewController {
         }
 
         UIView.setAnimationCurve(animationCurve)
-        UIView.animateWithDuration(animationDuration, animations: { 
+        UIView.animate(withDuration: animationDuration, animations: { 
             if var offset = self.scrollView?.contentOffset {
                 offset.y += keyboardHeight
 
@@ -223,13 +225,13 @@ class ViewController: UIViewController {
         self.view.layoutIfNeeded()
     }
 
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
 
         let userInfo = notification.userInfo!
-        let keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue().height
+        let keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
 
         let animationDuration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        let animationCurve = UIViewAnimationCurve(rawValue:(userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue)!
+        let animationCurve = UIViewAnimationCurve(rawValue:(userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).intValue)!
 
         if var insets = self.scrollView?.contentInset {
             insets.bottom -= keyboardHeight
@@ -237,7 +239,7 @@ class ViewController: UIViewController {
         }
 
         UIView.setAnimationCurve(animationCurve)
-        UIView.animateWithDuration(animationDuration, animations: {
+        UIView.animate(withDuration: animationDuration, animations: {
             if var offset = self.scrollView?.contentOffset {
                 offset.y -= keyboardHeight
                 if offset.y < 0.0 { offset.y = 0.0 }
@@ -248,19 +250,19 @@ class ViewController: UIViewController {
         self.view.layoutIfNeeded()
     }
 
-    func scrollTapped(recognizer: UIGestureRecognizer) {
+    func scrollTapped(_ recognizer: UIGestureRecognizer) {
         self.view.endEditing(true)
     }
 }
 
 extension ViewController: UITextFieldDelegate {
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if let text = textField.text as NSString? {
-            let newText = text.stringByReplacingCharactersInRange(range, withString: string)
+            let newText = text.replacingCharacters(in: range, with: string)
             if newText != "" {
-                enqueueButton.enabled = true
+                enqueueButton.isEnabled = true
             } else {
-                enqueueButton.enabled = false
+                enqueueButton.isEnabled = false
             }
         }
         return true

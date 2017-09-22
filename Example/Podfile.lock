@@ -1,9 +1,9 @@
 PODS:
-  - RGSnackBar (0.1.0):
-    - SteviaLayout (~> 2.0)
-    - SwiftPriorityQueue (~> 1.0.0)
-  - SteviaLayout (2.2.1)
-  - SwiftPriorityQueue (1.0.3)
+  - RGSnackBar (0.3.0):
+    - SteviaLayout (~> 3.0)
+    - SwiftPriorityQueue (~> 1.1.0)
+  - SteviaLayout (3.2.0)
+  - SwiftPriorityQueue (1.1.2)
 
 DEPENDENCIES:
   - RGSnackBar (from `../`)
@@ -13,9 +13,9 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  RGSnackBar: f9a0a2479b3c4514a01f26a71e2875a69e9eff26
-  SteviaLayout: d5036cb1404aa6351633f06fa475660b3ea89fa5
-  SwiftPriorityQueue: 3c3dd50743f33efa627cbe2ff8e274912b3962d2
+  RGSnackBar: d25a8499869c279eb268a160ae71ceae6b9e5ac2
+  SteviaLayout: 85c405f118ddb8637d0674ef6a79eefb792bf90b
+  SwiftPriorityQueue: bafec150153c600a6b9f97b42abe25538745fadb
 
 PODFILE CHECKSUM: 5e6b894ff97725c1cf5bb5adeafa8be4a1568db4
 

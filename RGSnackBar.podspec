@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RGSnackBar'
-  s.version          = '0.2.0'
+  s.version          = '0.3.0'
   s.summary          = 'A small, yet robust and extensible snackbar for iOS'
 
 # This description is used to generate tags and improve search results.
@@ -35,7 +35,7 @@ More will come.
   s.source_files = 'RGSnackBar/Classes/**/*'
 
   s.frameworks = 'UIKit'
-  s.dependency 'SwiftPriorityQueue', '~> 1.0.0'
-  s.dependency 'SteviaLayout', '~> 2.0'
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '2.3' }
+  s.dependency 'SwiftPriorityQueue', '~> 1.1.0'
+  s.dependency 'SteviaLayout', '~> 3.0'
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.2' }
 end

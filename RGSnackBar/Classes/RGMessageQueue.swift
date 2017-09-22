@@ -15,19 +15,19 @@ import SwiftPriorityQueue
  * them on to the specified presenter in the proper order.
  */
 
-public class RGMessageQueue: NSObject {
-    private var _messages = PriorityQueue<RGMessage>()
-    private var _messageBeingShown: RGMessage?
-    private var _operationQueue = NSOperationQueue()
-    private static var instanceCounter: UInt = 0
+open class RGMessageQueue: NSObject {
+    fileprivate var _messages = PriorityQueue<RGMessage>()
+    fileprivate var _messageBeingShown: RGMessage?
+    fileprivate var _operationQueue = OperationQueue()
+    fileprivate static var instanceCounter: UInt = 0
 
     /// The RGMessagePresenter to be used for presenting messages
-    public var presenter: RGMessagePresenter
+    open var presenter: RGMessagePresenter
 
     /// TODO: say something meaningful
     public init(presenter: RGMessagePresenter) {
         self.presenter = presenter
-        _operationQueue.qualityOfService = .Background
+        _operationQueue.qualityOfService = .background
         _operationQueue.name = "com.wearerealitygames.rgsnackbar.messagequeue.\(RGMessageQueue.instanceCounter)"
         _operationQueue.maxConcurrentOperationCount = 1
         super.init()
@@ -40,8 +40,8 @@ public class RGMessageQueue: NSObject {
      *
      * - Parameter message: message to be pushed
      */
-    public func push(message: RGMessage) {
-        _operationQueue.addOperationWithBlock({
+    open func push(_ message: RGMessage) {
+        _operationQueue.addOperation({
             self._messages.push(message)
 
             guard self._messageBeingShown == nil else {
@@ -54,13 +54,13 @@ public class RGMessageQueue: NSObject {
 
     /// Present next message if there is one.
     func showNextMessage() {
-        guard let queue = NSOperationQueue.currentQueue() where queue == _operationQueue else {
-            _operationQueue.addOperationWithBlock({ self.showNextMessage() })
+        guard let queue = OperationQueue.current, queue == _operationQueue else {
+            _operationQueue.addOperation({ self.showNextMessage() })
             return
         }
         if let message = _messages.pop() {
             _messageBeingShown = message
-            dispatch_async(dispatch_get_main_queue(), { 
+            DispatchQueue.main.async(execute: { 
                 self.presenter.present(message)
             })
         }

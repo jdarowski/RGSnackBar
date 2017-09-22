@@ -22,13 +22,13 @@ public protocol RGMessagePresenter {
      * Present the message in this presenter's specific way.
      * - Parameter message: message to be presented
      */
-    func present(message: RGMessage)
+    func present(_ message: RGMessage)
 
     /**
      * Dismiss the message in this presenter's specific way.
      * - Parameter message: message to be dismissed
      */
-    func dismiss(message: RGMessage)
+    func dismiss(_ message: RGMessage)
 }
 
 /**

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SteviaLayout
+import Stevia
 
 public typealias RGSnackBarAnimationBlock =  
     ((RGMessageSnackBarView, UIView, Bool) -> Void)
@@ -16,22 +16,22 @@ public typealias RGSnackBarAnimationBlock =
  * This is where the fun begins. Instantiate (or extend)this class to define 
  * your very own buttery smooth, candy-like animations for the snackbar.
  */
-public class RGMessageSnackBarAnimation: NSObject {
+open class RGMessageSnackBarAnimation: NSObject {
 
     /// The block that will be executed before animating
-    public var preAnimationBlock: RGSnackBarAnimationBlock?
+    open var preAnimationBlock: RGSnackBarAnimationBlock?
 
     /// The animation block - will be executed inside UIView.animate(...)
-    public var animationBlock: RGSnackBarAnimationBlock
+    open var animationBlock: RGSnackBarAnimationBlock
 
     /// The block that will be executed in the completion block of animate(...)
-    public var postAnimationBlock: RGSnackBarAnimationBlock?
+    open var postAnimationBlock: RGSnackBarAnimationBlock?
 
     /// The duration of the animation
-    public var animationDuration: NSTimeInterval
+    open var animationDuration: TimeInterval
 
     /// States whether the snackbar is off-screen
-    public var beginsOffscreen: Bool
+    open var beginsOffscreen: Bool
 
     /**
      * The only constructor you'll need.
@@ -44,9 +44,9 @@ public class RGMessageSnackBarAnimation: NSObject {
      */
 
     public init(preBlock: RGSnackBarAnimationBlock?,
-                animationBlock: RGSnackBarAnimationBlock,
+                animationBlock: @escaping RGSnackBarAnimationBlock,
                 postBlock: RGSnackBarAnimationBlock?,
-                animationDuration: NSTimeInterval=0.4,
+                animationDuration: TimeInterval=0.4,
                 beginsOffscreen: Bool=false) {
         self.preAnimationBlock = preBlock
         self.animationBlock = animationBlock
@@ -58,24 +58,24 @@ public class RGMessageSnackBarAnimation: NSObject {
     }
 
     /// A predefined zoom-in animation, UIAlertView style
-    public static let zoomIn: RGMessageSnackBarAnimation =
+    open static let zoomIn: RGMessageSnackBarAnimation =
         RGMessageSnackBarAnimation(preBlock: { (snackBarView, _, isPresenting)
             in
             if isPresenting {
-                snackBarView.transform = CGAffineTransformMakeScale(1.2, 1.2)
+                snackBarView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
             }
         }, animationBlock: { (snackBarView, parentView, isPresenting) in
             if isPresenting {
                 snackBarView.alpha = 1.0
-                snackBarView.transform = CGAffineTransformIdentity
+                snackBarView.transform = CGAffineTransform.identity
             } else {
                 snackBarView.alpha = 0.0
-                snackBarView.transform = CGAffineTransformMakeScale(1.2, 1.2)
+                snackBarView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
             }
         }, postBlock: nil, animationDuration: 0.2, beginsOffscreen: false)
 
     /// A predefined slide up animation, system banner style (just opposite)
-    public static let slideUp: RGMessageSnackBarAnimation =
+    open static let slideUp: RGMessageSnackBarAnimation =
         RGMessageSnackBarAnimation(preBlock:
             { (snackBarView, parentView, isPresenting) in
             if isPresenting {
