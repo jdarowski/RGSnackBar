@@ -57,6 +57,10 @@ open class RGMessageSnackBarView: RGMessageView {
     open var backgroundBlurEffect = UIBlurEffect(style: .dark) {
         didSet { style() }
     }
+    
+    open var padding: UIEdgeInsets {
+        didSet { style() }
+    }
 
     // ----  END STYLES  -------------------------------------------------------
 
@@ -76,11 +80,16 @@ open class RGMessageSnackBarView: RGMessageView {
                 containerView: UIView,
                 bottomMargin: CGFloat=20.0,
                 sideMargins: CGFloat=8.0,
-                cornerRadius: CGFloat=8.0) {
+                cornerRadius: CGFloat=8.0,
+                padding: UIEdgeInsets=UIEdgeInsets(top: 8.0,
+                                                   left: 20.0,
+                                                   bottom: 8.0,
+                                                   right: 20.0)) {
         parentView = containerView
         self.bottomMargin = bottomMargin
         self.sideMargins = sideMargins
         self.cornerRadius = cornerRadius
+        self.padding = padding
         super.init(frame: containerView.frame, message: message)
 
         self.backgroundColor = UIColor.clear
@@ -97,6 +106,7 @@ open class RGMessageSnackBarView: RGMessageView {
         bottomMargin = 0.0
         sideMargins = 0.0
         cornerRadius = 0.0
+        padding = .zero
 
         super.init(coder: aDecoder)
     }
@@ -117,10 +127,10 @@ open class RGMessageSnackBarView: RGMessageView {
             |-sideMargins-self-sideMargins-|
         )
 
-        messageLabel.top(8).bottom(8)
+        messageLabel.top(padding.top).bottom(padding.bottom)
 
         self.layout(
-            |-imageView-messageLabel-actionStack-|
+            |-padding.left-imageView-messageLabel-actionStack-padding.right-|
         )
 
         sv(blurView)
@@ -130,9 +140,9 @@ open class RGMessageSnackBarView: RGMessageView {
         messageLabel.setContentHuggingPriority(0, for: .horizontal)
 
         imageView.contentMode = .scaleAspectFit
-        imageView.top(>=8).bottom(>=8)
+        imageView.top(>=padding.top).bottom(>=padding.bottom)
 
-        actionStack.top(8.0).bottom(8.0)
+        actionStack.top(padding.top).bottom(padding.bottom)
         actionStack.alignment = .center
         actionStack.axis = .horizontal
         actionStack.distribution = .equalSpacing
@@ -187,15 +197,26 @@ open class RGMessageSnackBarView: RGMessageView {
             }
             butt.titleLabel?.font = newFont
         }
+        // Image
+        imageView.topConstraint?.constant = padding.top
+        imageView.bottomConstraint?.constant = padding.bottom
+        imageView.leftConstraint?.constant = padding.left
 
         // Message
         messageLabel.font = messageLabel.font.withSize(textFontSize)
         messageLabel.textColor = textFontColor
+        messageLabel.topConstraint?.constant = padding.top
+        messageLabel.bottomConstraint?.constant = -padding.bottom
 
         // Constraints
         self.bottomConstraint?.constant = -(bottomMargin)
         self.leftConstraint?.constant = sideMargins
         self.rightConstraint?.constant = -(sideMargins)
+        
+        // Actions
+        actionStack.topConstraint?.constant = padding.top
+        actionStack.bottomConstraint?.constant = -padding.bottom
+        actionStack.rightConstraint?.constant = -padding.right
 
         // Corners
         layer.cornerRadius = cornerRadius

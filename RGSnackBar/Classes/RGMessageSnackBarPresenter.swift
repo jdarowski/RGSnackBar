@@ -39,14 +39,22 @@ open class RGMessageSnackBarPresenter: RGMessagePresenter {
      * - Parameter sideMargins: the distance between the `view`'s 
      *   and the snackbar's sides.
      * - Parameter cornerRadius: how round should the snackbar's corners be
+     * - Parameter padding: how far the snackbar's content should be relative
+     *   to its sides
      */
     public init(view: UIView,
                 animation: RGMessageSnackBarAnimation=RGMessageSnackBarAnimation.slideUp,
                 bottomMargin: CGFloat=20.0,
                 sideMargins: CGFloat=8.0,
-                cornerRadius: CGFloat=8.0) {
+                cornerRadius: CGFloat=8.0,
+                padding: UIEdgeInsets=UIEdgeInsets(top: 8.0, left: 20.0, bottom: 8.0, right: 20.0)) {
         destinationView = view
-        snackBarView = RGMessageSnackBarView(message: nil, containerView: view, bottomMargin: bottomMargin, sideMargins: sideMargins, cornerRadius: cornerRadius)
+        snackBarView = RGMessageSnackBarView(message: nil,
+                                             containerView: view,
+                                             bottomMargin: bottomMargin,
+                                             sideMargins: sideMargins,
+                                             cornerRadius: cornerRadius,
+                                             padding: padding)
         self.animation = animation
 
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapGestureRecognized(_:)))

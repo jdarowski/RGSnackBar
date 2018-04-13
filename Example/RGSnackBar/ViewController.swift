@@ -25,13 +25,25 @@ class ViewController: UIViewController {
     @IBOutlet weak var cornerRadiusSlider: UISlider!
     @IBOutlet weak var buttonFontSizeSlider: UISlider!
     @IBOutlet weak var labelFontSizeSlider: UISlider!
+    
+    @IBOutlet weak var paddingTopSlider: UISlider!
+    @IBOutlet weak var paddingLeftSlider: UISlider!
+    @IBOutlet weak var paddingBottomSlider: UISlider!
+    @IBOutlet weak var paddingRightSlider: UISlider!
 
+    @IBOutlet var allSliders: [UISlider]!
+    
     @IBOutlet weak var bottomMarginTextField: UITextField!
     @IBOutlet weak var sideMarginsTextField: UITextField!
     @IBOutlet weak var cornerRadiusTextField: UITextField!
     @IBOutlet weak var buttonFontSizeTextField: UITextField!
     @IBOutlet weak var labelFontSizeTextField: UITextField!
 
+    @IBOutlet weak var paddingTopTextField: UITextField!
+    @IBOutlet weak var paddingLeftTextField: UITextField!
+    @IBOutlet weak var paddingBottomTextField: UITextField!
+    @IBOutlet weak var paddingRightTextField: UITextField!
+    
     let textFieldNumberFormatter = NumberFormatter()
 
     @IBOutlet weak var scrollView: UIScrollView?
@@ -93,11 +105,9 @@ class ViewController: UIViewController {
             messageQueue = RGMessageQueue(presenter: RGMessageSnackBarPresenter(view: view, animation: RGMessageSnackBarAnimation.slideUp))
         }
 
-        sliderValueChanged(bottomMarginSlider)
-        sliderValueChanged(sideMarginsSlider)
-        sliderValueChanged(cornerRadiusSlider)
-        sliderValueChanged(buttonFontSizeSlider)
-        sliderValueChanged(labelFontSizeSlider)
+        allSliders?.forEach {
+            self.sliderValueChanged($0)
+        }
         animationControlValueChanged(animationControl)
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -191,6 +201,18 @@ class ViewController: UIViewController {
         case labelFontSizeSlider:
             presenter?.snackBarView.textFontSize = cgFloatValue
             labelFontSizeTextField.text = textFieldNumberFormatter.string(from: numberValue)
+        case paddingTopSlider:
+            presenter?.snackBarView.padding.top = cgFloatValue
+            paddingTopTextField.text = textFieldNumberFormatter.string(from: numberValue)
+        case paddingLeftSlider:
+            presenter?.snackBarView.padding.left = cgFloatValue
+            paddingLeftTextField.text = textFieldNumberFormatter.string(from: numberValue)
+        case paddingBottomSlider:
+            presenter?.snackBarView.padding.bottom = cgFloatValue
+            paddingBottomTextField.text = textFieldNumberFormatter.string(from: numberValue)
+        case paddingRightSlider:
+            presenter?.snackBarView.padding.right = cgFloatValue
+            paddingRightTextField.text = textFieldNumberFormatter.string(from: numberValue)
         default:
             print("Unknown slider ;o")
         }
