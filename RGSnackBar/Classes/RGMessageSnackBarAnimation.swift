@@ -58,7 +58,7 @@ open class RGMessageSnackBarAnimation: NSObject {
     }
 
     /// A predefined zoom-in animation, UIAlertView style
-    open static let zoomIn: RGMessageSnackBarAnimation =
+    public static let zoomIn: RGMessageSnackBarAnimation =
         RGMessageSnackBarAnimation(preBlock: { (snackBarView, _, isPresenting)
             in
             if isPresenting {
@@ -75,7 +75,7 @@ open class RGMessageSnackBarAnimation: NSObject {
         }, postBlock: nil, animationDuration: 0.2, beginsOffscreen: false)
 
     /// A predefined slide up animation, system banner style (just opposite)
-    open static let slideUp: RGMessageSnackBarAnimation =
+    public static let slideUp: RGMessageSnackBarAnimation =
         RGMessageSnackBarAnimation(preBlock:
             { (snackBarView, parentView, isPresenting) in
             if isPresenting {

@@ -29,7 +29,7 @@ open class RGActionButton: UIButton {
         self.action = action
         super.init(frame: .zero)
 
-        self.setTitle(action.title, for: UIControlState())
+        self.setTitle(action.title, for: .normal)
         self.addTarget(self, action: #selector(performAction(_:)), for: .touchUpInside)
     }
 

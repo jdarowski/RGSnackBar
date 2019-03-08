@@ -16,7 +16,7 @@ public protocol RGMessagePresenter {
      * The delegate which might (and should) be informed whenever the message
      * has been presented or dismissed.
      */
-    weak var delegate: RGMessagePresenterDelegate? { get set }
+    var delegate: RGMessagePresenterDelegate? { get set }
 
     /**
      * Present the message in this presenter's specific way.

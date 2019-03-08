@@ -137,7 +137,7 @@ open class RGMessageSnackBarView: RGMessageView {
 
         messageLabel.numberOfLines = 0
         messageLabel.textColor = UIColor.white
-        messageLabel.setContentHuggingPriority(0, for: .horizontal)
+        messageLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 0), for: .horizontal)
 
         imageView.contentMode = .scaleAspectFit
         imageView.top(>=padding.top).bottom(>=padding.bottom)
@@ -147,12 +147,12 @@ open class RGMessageSnackBarView: RGMessageView {
         actionStack.axis = .horizontal
         actionStack.distribution = .equalSpacing
         actionStack.spacing = 10.0
-        actionStack.setContentCompressionResistancePriority(900,
+        actionStack.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 900),
                                                         for: .horizontal)
 
         blurView.frame = self.frame
         blurView.top(0).bottom(0).left(0).right(0)
-        sendSubview(toBack: blurView)
+        sendSubviewToBack(blurView)
     }
 
     override open func layoutMessage(_ message: RGMessage) {
@@ -172,7 +172,7 @@ open class RGMessageSnackBarView: RGMessageView {
             button.addTarget(self,
                              action: #selector(actionTapped(_:)),
                              for: .touchUpInside)
-            button.setContentCompressionResistancePriority(1000,
+            button.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000),
                                                            for: .horizontal)
             actionStack.addArrangedSubview(button)
         }
@@ -188,7 +188,7 @@ open class RGMessageSnackBarView: RGMessageView {
                 continue
             }
             butt.setTitleColor(buttonFontColor,
-                                 for: UIControlState())
+                                 for: UIControl.State())
             var newFont: UIFont
             if let font = butt.titleLabel?.font {
                 newFont = font.withSize(buttonFontSize)
