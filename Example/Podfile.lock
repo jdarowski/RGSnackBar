@@ -1,5 +1,5 @@
 PODS:
-  - RGSnackBar (0.4.0):
+  - RGSnackBar (0.5.0):
     - SteviaLayout (~> 4.0)
     - SwiftPriorityQueue (~> 1.0)
   - SteviaLayout (4.4.3)
@@ -9,7 +9,7 @@ DEPENDENCIES:
   - RGSnackBar (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - SteviaLayout
     - SwiftPriorityQueue
 
@@ -18,10 +18,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  RGSnackBar: 7172288f66ee879afbafb25803a939c564a9e4a6
+  RGSnackBar: e9817be610c5e1e832763c238cfda91d263a8024
   SteviaLayout: ae5ee66101e03607a93c9b3773b84ab7ba7b3d17
   SwiftPriorityQueue: 2ce5768829a9ef84d8b8fec5e73546d72ee3d8f6
 
 PODFILE CHECKSUM: 5e6b894ff97725c1cf5bb5adeafa8be4a1568db4
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.8.3
