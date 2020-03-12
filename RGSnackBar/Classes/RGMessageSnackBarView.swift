@@ -120,14 +120,20 @@ open class RGMessageSnackBarView: RGMessageView {
     func layoutMainView() {
 
         sv(messageLabel, imageView, actionStack)
-
+        
         self.bottom(bottomMargin)
 
         parentView.layout(
             |-sideMargins-self-sideMargins-|
         )
 
-        messageLabel.top(padding.top).bottom(padding.bottom)
+        messageLabel.top(padding.top)
+
+        if #available(iOS 11.0, *) {
+            messageLabel.Bottom == safeAreaLayoutGuide.Bottom - padding.bottom
+        } else {
+            messageLabel.Bottom == Bottom - padding.bottom
+        }
 
         self.layout(
             |-padding.left-imageView-messageLabel-actionStack-padding.right-|
@@ -142,13 +148,19 @@ open class RGMessageSnackBarView: RGMessageView {
         imageView.contentMode = .scaleAspectFit
         imageView.top(>=padding.top).bottom(>=padding.bottom)
 
-        actionStack.top(padding.top).bottom(padding.bottom)
+        actionStack.top(padding.top)
         actionStack.alignment = .center
         actionStack.axis = .horizontal
         actionStack.distribution = .equalSpacing
         actionStack.spacing = 10.0
         actionStack.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 900),
                                                         for: .horizontal)
+
+        if #available(iOS 11.0, *) {
+            actionStack.Bottom == safeAreaLayoutGuide.Bottom - padding.bottom
+        } else {
+            actionStack.Bottom == Bottom - padding.bottom
+        }
 
         blurView.frame = self.frame
         blurView.top(0).bottom(0).left(0).right(0)
